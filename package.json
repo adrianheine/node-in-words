@@ -1,0 +1,27 @@
+{
+  "name": "in-words",
+  "version": "0.0.0",
+  "description": "Convert numbers to words",
+  "main": "index.js",
+  "homepage": "https://github.com/adrianlang/node-in-words",
+  "scripts": {
+    "test": "mocha --recursive -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adrianlang/node-in-words.git"
+  },
+  "keywords": [
+    "numbers",
+    "in-words",
+    "words"
+  ],
+  "author": "Adrian Lang <mail@adrianlang.de>",
+  "licenses": [ {
+    "type": "Apache 2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  } ],
+  "devDependencies": {
+    "mocha": ""
+  }
+}
