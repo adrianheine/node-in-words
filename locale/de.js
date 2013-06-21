@@ -12,23 +12,22 @@ module.exports = function inWords(val, j) {
 
   if (val < 13) {
     return {
-      0: j && (j.before || j.after) ? '' : 'null',
-      1: j && j.after ? 'ein' : 'eins',
-      2: 'zwei',
-      3: 'drei',
-      4: 'vier',
-      5: 'fünf',
-      6: j && j.after === 'zehn' ? 'sech' : 'sechs',
-      7: j && j.after === 'zehn' ? 'sieb' : 'sieben',
-      8: 'acht',
-      9: 'neun',
+       0: j && (j.before || j.after) ? '' : 'null',
+       1: j && j.after ? 'ein' : 'eins',
+       2: 'zwei',
+       3: 'drei',
+       4: 'vier',
+       5: 'fünf',
+       6: j && j.after === 'zehn' ? 'sech' : 'sechs',
+       7: j && j.after === 'zehn' ? 'sieb' : 'sieben',
+       8: 'acht',
+       9: 'neun',
       10: 'zehn',
       11: 'elf',
       12: 'zwölf'
     }[val];
   } else if (val < 100) {
-    var prefix = inWords(val % 10, {after: val < 20 ? 'zehn' : true});
-    return join(prefix, val > 20 ? 'und' : '', {
+    return join(inWords(val % 10, {after: val < 20 ? 'zehn' : true}), val > 20 ? 'und' : '', {
       1: 'zehn',
       2: 'zwanzig',
       3: 'dreißig',
@@ -46,4 +45,4 @@ module.exports = function inWords(val, j) {
   } else {
     throw new Error('too big');
   }
-}
+};
