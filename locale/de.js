@@ -73,17 +73,16 @@ var handlers = (function () {
     }
     handlers[h[i].d] = h[i].h;
   }
+  handlers.max = h[h.length - 1].d;
   return handlers;
 }());
 
 function inWords(val, j) {
-  if (!(typeof val === 'string' || val instanceof String)) {
-    val = String(val);
-  }
+  val = String(val);
   j = j || {};
 
-  var l = val.length;
-  for (i = l; i < l + 3; ++i) {
+  var i;
+  for (i = val.length; i <= handlers.max; ++i) {
     if (handlers.hasOwnProperty(i)) {
       return handlers[i](val, j);
     }
