@@ -1,9 +1,10 @@
 {
   "name": "in-words",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Convert numbers to words",
   "main": "index.js",
   "homepage": "https://github.com/adrianlang/node-in-words",
+  "bugs": "https://github.com/adrianlang/node-in-words/issues",
   "scripts": {
     "test": "mocha --recursive -R spec"
   },
