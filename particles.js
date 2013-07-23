@@ -11,44 +11,46 @@ Particle.prototype = {
   }
 };
 
-Particle.addMod = function (name, handler) {
-  Particle.prototype[name] = function () {
+Particle.addMod = function (name, toStringGenerator) {
+  Particle.prototype[name] = function (/* ... */) {
+    var superToString = this.toString;
     var newP = Object.create(this);
-    var oldToString = newP.toString;
-    var toString = handler.apply(this, arguments);
-    newP.toString = function (after, before) {
+    var toString = toStringGenerator.apply(newP, arguments);
+    Object.defineProperty(newP, 'toString', { value: function (after, before) {
       if (arguments.length === 0) {
-        return Particle.prototype.toString.call(this);
+        return Particle.prototype.toString.apply(this);
       }
       var _ret = toString.apply(this, arguments);
-      return (typeof _ret !== 'undefined') ? _ret : oldToString.apply(this, arguments);
-    };
+      return (typeof _ret !== 'undefined') ? _ret : superToString.apply(this, arguments);
+    }});
     return newP;
   };
 };
 
+function contextMatches(where, when, after, before) {
+  var val = {
+    before: after,
+    after: before
+  }[where];
+  val = val || '';
+  return (when === val || when === '*');
+}
+
 Particle.addMod('mutates', function (mutatesWhere, mutatesWhen, mutatesTo) {
   return function (after, before) {
-    var val = {
-      before: after,
-      after: before
-    }[mutatesWhere];
-    val = val || '';
-    if (mutatesWhen === val || mutatesWhen === '*') {
+    if (contextMatches(mutatesWhere, mutatesWhen, after, before)) {
       return mutatesTo;
     }
   };
 });
 
 Particle.addMod('looses', function (loosesWhere, loosesWhen, loosesHowMuch) {
+  var oldToString = this.toString;
   return function (after, before) {
-    var val = {
-      before: after,
-      after: before
-    }[loosesWhere];
-    val = val || '';
-    if (loosesWhen === val || loosesWhen === '*') {
-      return this.id.substr(0, this.id.length - loosesHowMuch);
+    var v;
+    if (contextMatches(loosesWhere, loosesWhen, after, before)) {
+      v = oldToString.apply(this, arguments);
+      return v.substr(0, v.length - loosesHowMuch);
     }
   };
 });
@@ -61,12 +63,7 @@ Particle.addMod('asSuffix', function () {
 
 Particle.addMod('hides', function (hidesWhere, hidesWhen) {
   return function (after, before) {
-    var val = {
-      before: after,
-      after: before
-    }[hidesWhere];
-    val = val || '';
-    if (hidesWhen === val || hidesWhen === '*') {
+    if (contextMatches(hidesWhere, hidesWhen, after, before)) {
       return '';
     }
   };

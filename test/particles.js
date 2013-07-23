@@ -49,4 +49,9 @@ describe('Particles', function () {
     var beetle = particles.Particle('beetle').mutates('before', 'suffix', 'swee');
     assert.equal(String(particles.Particles(beetle, suffix)), 'sweefix');
   });
+  it('looses on the mutation', function () {
+    var p = particles.Particle('original').mutates('before', 'suffix', 'mutated').looses('before', '*', 1);
+    var s = particles.Particle('suffix');
+    assert.equal(String(particles.Particles(p, s)), 'mutatesuffix');
+  });
 });
