@@ -4,13 +4,8 @@ var particles = require('../particles');
 var P = particles.Particle;
 var Particles = particles.Particles;
 
-function splitHandle(opts, val) {
-  var pos = val.length - opts.cutOffLowest;
-  return opts.join(opts.handleParts(val.substr(0, pos)), opts.handleParts(val.substr(pos)));
-}
-
 function splitInWords(pos, joiner, val) {
-  return splitHandle({
+  return utils.splitHandle({
     cutOffLowest: pos,
     join: function (higher, lower) {
       return Particles(higher, joiner, lower);
@@ -38,7 +33,7 @@ var lessThanHundred = (function () {
   var tenUnd = P('und').hides('before', 'zehn').hides('after', '').hides('before', '');
   var tenZig = P('zig').asSuffix().mutates('after', 'drei', 'ßig').mutates('after', 'eins', 'hn');
 
-  var buildLessThanHundred = splitHandle.bind(null, {
+  var buildLessThanHundred = utils.splitHandle.bind(null, {
     cutOffLowest: 1,
     join: function (ten, single) {
       return Particles(single, tenUnd, Particles(ten, tenZig));

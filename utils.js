@@ -12,3 +12,8 @@ exports.firstPropFrom = function (object, i) {
     }
   }
 };
+
+exports.splitHandle = function (opts, val) {
+  var pos = val.length - opts.cutOffLowest;
+  return opts.join(opts.handleParts(val.substr(0, pos)), opts.handleParts(val.substr(pos)));
+};

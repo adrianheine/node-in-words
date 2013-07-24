@@ -1,12 +1,5 @@
-var assert = require('assert');
-
 var de = require('../../locale/de');
-
-function t(number, string) {
-  it('gives the correct result for ' + number, function () {
-    assert.equal(de(number), string);
-  });
-}
+var t = require('../util').inWordsTest.bind(null, de);
 
 describe('de', function () {
   t(0, 'null');
