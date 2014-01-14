@@ -76,9 +76,13 @@ function Particles(ps) {
   if (!(this instanceof Particles)) {
     return new Particles(ps);
   }
+
+  function conditionalToString(p, k, ps) {
+    return p && p.toString(ps[k+1] && String(ps[k+1]), ps[k-1] && String(ps[k-1]));
+  }
   this.toString = function () {
-    var _ps = ps.filter(function (p, k) {return p && p.toString(ps[k+1] && String(ps[k+1]), ps[k-1] && String(ps[k-1]));})
-    _ps = _ps.map(function (p, k) { return p.toString(_ps[k+1] && String(_ps[k+1]), _ps[k-1] && String(_ps[k-1])); })
+    var _ps = ps.filter(conditionalToString);
+    _ps = _ps.map(conditionalToString);
     return _ps.join('');
   };
 };
