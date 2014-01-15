@@ -15,6 +15,7 @@ describe('de', function () {
   t(60, 'sechzig');
   t(70, 'siebzig');
   t(100, 'einhundert');
+  t(101, 'einhunderteins');
   t(600, 'sechshundert');
   t(700, 'siebenhundert');
   t(10000, 'zehntausend');

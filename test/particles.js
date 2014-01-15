@@ -54,4 +54,8 @@ describe('Particles', function () {
     var s = particles.Particle('suffix');
     assert.equal(String(particles.Particles(p, s)), 'mutatesuffix');
   });
+  it('does not let an asterisk match an empty context', function () {
+    var p = particles.Particle('eins').looses('before', '*', '1');
+    assert.equal(String(particles.Particles([p])), 'eins');
+  });
 });

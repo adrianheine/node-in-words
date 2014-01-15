@@ -32,8 +32,7 @@ function contextMatches(where, when, after, before) {
     before: after,
     after: before
   }[where];
-  val = val || '';
-  return (when === val || when === '*');
+  return (when === (val || '') || (when === '*' && typeof val !== 'undefined'));
 }
 
 Particle.addMod('mutates', function (mutatesWhere, mutatesWhen, mutatesTo) {
