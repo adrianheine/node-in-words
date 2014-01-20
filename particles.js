@@ -8,6 +8,9 @@ function Particle(particle) {
 Particle.prototype = {
   toString: function () {
     return this.id;
+  },
+  toSource: function () {
+    return 'P("' + this.id + '")';
   }
 };
 
@@ -68,6 +71,10 @@ Particle.addMod('hides', function (hidesWhere, hidesWhen) {
   };
 });
 
+function psToSource(ps) {
+  return 'Ps([' + ps.map(function (p) { return p.toSource ? p.toSource() : ('String("' + String(p) + '")'); }).join(', ') + '])';
+}
+
 function Particles(ps) {
   if (arguments.length > 1) {
     ps = Array.prototype.slice.call(arguments);
@@ -83,6 +90,14 @@ function Particles(ps) {
     var _ps = ps.filter(conditionalToString);
     _ps = _ps.map(conditionalToString);
     return _ps.join('');
+  };
+
+  this.getMembers = function () {
+    return ps.slice();
+  };
+
+  this.toSource = function () {
+    return psToSource(ps);
   };
 };
 

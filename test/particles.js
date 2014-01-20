@@ -58,4 +58,9 @@ describe('Particles', function () {
     var p = particles.Particle('eins').looses('before', '*', '1');
     assert.equal(String(particles.Particles([p])), 'eins');
   });
+  it('supports a getMembers method', function () {
+    var p1 = particles.Particle('');
+    var p2 = particles.Particle('');
+    assert.deepEqual(particles.Particles([p1, p2]).getMembers(), [p1, p2]);
+  });
 });
