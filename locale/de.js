@@ -4,16 +4,6 @@ var particles = require('../particles');
 var P = particles.Particle;
 var Particles = particles.Particles;
 
-function splitInWords(pos, joiner, val) {
-  return utils.splitHandle({
-    cutOffLowest: pos,
-    join: function (higher, lower) {
-      return Particles(higher, joiner, lower);
-    },
-    handleParts: _inWords
-  }, val);
-}
-
 var lessThanHundred = (function () {
   var atoms = {
      0: P('null').hides('after', '*').hides('before', '*'),
@@ -33,42 +23,98 @@ var lessThanHundred = (function () {
   var tenUnd = P('und').hides('before', 'zehn').hides('after', '').hides('before', '');
   var tenZig = P('zig').asSuffix().mutates('after', 'drei', 'ßig').mutates('after', 'eins', 'hn');
 
-  var buildLessThanHundred = utils.splitHandle.bind(null, {
-    cutOffLowest: 1,
-    join: function (ten, single) {
-      return Particles(single, tenUnd, Particles(ten, tenZig));
-    },
-    handleParts: _inWords
-  });
-  return utils.withOverrides.bind(null, atoms, buildLessThanHundred);
+  return function (val, params) {
+      var _return = utils.withOverrides(atoms, function (val) {
+        return utils.splitHandle({
+          cutOffLowest: 1,
+          join: function (ten, single) {
+            return Particles(single, tenUnd, Particles(ten, tenZig));
+          },
+          handleParts: function (val) { return _inWords(val, params); }
+        }, val);
+      }, val);
+      // FIXME: Make this knowledge part of the particle and
+      // have Particle::toString react to an environment object
+      if (params.gender === 'f' && String(_return) === 'eins') {
+        _return = 'eine';
+      }
+      return _return;
+    }
 }());
+
+var medium = function (joiner, pos) {
+  var joiner = P(joiner).asSuffix();
+  return function (val, params) {
+    return utils.splitHandle({
+      cutOffLowest: pos,
+      join: function (higher, lower) {
+        return Particles(higher, joiner, lower);
+      },
+      handleHigherPart: function (val) {
+        return _inWords(val, {});
+      },
+      handleLowerPart: function (val) {
+        return _inWords(val, params);
+      },
+    }, val);
+  };
+};
+
+var biggie = function (nounP, cutOff) {
+  var biggieSpace = P(' ').hides('before', '');
+  var nounP = nounP.asSuffix();
+  return function (val, params) {
+    return utils.splitHandle({
+      cutOffLowest: cutOff,
+      join: function (higher, lower) {
+        // unwrap particles
+        higher = higher instanceof Particles ? higher.getMembers() : [ higher ];
+        return Particles(higher.concat([ nounP, biggieSpace, lower ]));
+      },
+      handleHigherPart: function (val) {
+        return _inWords(val, {gender: 'f'});
+      },
+      handleLowerPart: function (val) {
+        return _inWords(val, params);
+      },
+    }, val);
+  };
+};
 
 // FIXME: Bigger numbers
 var handlers = (function () {
   var h = [
     {d: 2, h: lessThanHundred},
-    {d: 3, h: 'hundert'},
-    {d: 6, h: 'tausend'}
+    {d: 3, h: medium.bind(null, 'hundert')},
+    {d: 6, h: medium.bind(null, 'tausend')},
+    {d: 9, h: biggie.bind(null, P(' Millionen').looses('after', 'eine', 2))},
+    {d: 12, h: biggie.bind(null, P(' Milliarden').looses('after', 'eine', 1))},
+    {d: 15, h: biggie.bind(null, P(' Billionen').looses('after', 'eine', 2))},
+    {d: 18, h: biggie.bind(null, P(' Billiarden').looses('after', 'eine', 1))},
+    {d: 21, h: biggie.bind(null, P(' Trillionen').looses('after', 'eine', 2))},
+    {d: 24, h: biggie.bind(null, P(' Trilliarden').looses('after', 'eine', 1))},
+    {d: 27, h: biggie.bind(null, P(' Quadrillionen').looses('after', 'eine', 2))},
+    {d: 30, h: biggie.bind(null, P(' Quadrilliarden').looses('after', 'eine', 1))},
   ];
   var handlers = {
     max: h[h.length - 1].d
   };
   for (var i = 0; i < h.length; ++i) {
-    handlers[h[i].d] = (typeof h[i].h === 'function') ? h[i].h : splitInWords.bind(null, h[i-1].d, P(h[i].h).asSuffix());
+    handlers[h[i].d] = i > 0 ? h[i].h(h[i-1].d) : h[i].h;
   }
   return handlers;
 }());
 
-function _inWords(val) {
-  return utils.firstPropFrom(handlers, val.length)(val);
+function _inWords(val, params) {
+  return utils.firstPropFrom(handlers, val.length)(val, params);
 };
 
-function inWords(val) {
+function inWords(val, params) {
   val = String(val);
   if (val.length > inWords.max) {
     throw new Error('too big');
   }
-  return String(_inWords(val));
+  return String(_inWords(val, params || {}));
 };
 inWords.max = handlers.max;
 
