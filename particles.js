@@ -87,9 +87,12 @@ function Particles(ps) {
     return p && p.toString(ps[k+1] && String(ps[k+1]), ps[k-1] && String(ps[k-1]));
   }
   this.toString = function () {
-    var _ps = ps.filter(conditionalToString);
-    _ps = _ps.map(conditionalToString);
-    return _ps.join('');
+    if (typeof this._string === 'undefined') {
+      this._string = ps.filter(conditionalToString)
+        .map(conditionalToString)
+        .join('');
+    }
+    return this._string;
   };
 
   this.getMembers = function () {
