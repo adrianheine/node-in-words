@@ -21,6 +21,7 @@ describe('de', function () {
   t(600, 'sechshundert');
   t(700, 'siebenhundert');
   t(10000, 'zehntausend');
+  t(700003, 'siebenhunderttausenddrei');
   t(427534, 'vierhundertsiebenundzwanzigtausendfünfhundertvierunddreißig');
   t(999999, 'neunhundertneunundneunzigtausendneunhundertneunundneunzig');
   t(1000000, 'eine Million');

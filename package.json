@@ -13,7 +13,10 @@
     "url": "git://github.com/adrianlang/node-in-words.git"
   },
   "keywords": [
+    "number",
     "numbers",
+    "numerals",
+    "stringify",
     "in-words",
     "words"
   ],
