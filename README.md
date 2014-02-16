@@ -39,7 +39,7 @@ v0.0.2 (2013-08-14)
  - Added basic English locale
  - Moved most of the string manipulation into an abstract ./particles.js
 
-v0.0.3 (2014-02-16)
+v0.1.0 (2014-02-16)
 
  - Added Polish locale
  - Make German locale work with much bigger numbers
