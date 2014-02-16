@@ -27,6 +27,24 @@ Todo
    - https://npmjs.org/package/numbered
    - https://npmjs.org/package/wordy
 
+Changes
+---------
+
+v0.0.1 (2013-06-21)
+
+ - Initial version with basic German locale
+
+v0.0.2 (2013-08-14)
+
+ - Added basic English locale
+ - Moved most of the string manipulation into an abstract ./particles.js
+
+v0.0.3 (2014-02-16)
+
+ - Added Polish locale
+ - Make German locale work with much bigger numbers
+ - Fix German locale for numbers ending with 1
+
 Other packages
 -----------
 
@@ -45,6 +63,6 @@ Author
 
 License
 -------
-Copyright 2013 Adrian Lang.
+Copyright 2013–2014 Adrian Lang.
 
 Licensed under the Apache License, Version 2.0. See (http://www.apache.org/licenses/LICENSE-2.0).
