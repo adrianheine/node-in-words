@@ -1,23 +1,35 @@
+/*global describe: false, it: false*/
+
+'use strict';
+
 var assert = require('assert');
 
 var particles = require('../particles');
+var Particle = particles.Particle;
+var Particles = particles.Particles;
 
 describe('Particle', function () {
   describe('id', function () {
-    var p = particles.Particle('new id');
+    var p = Particle('new id');
     it('is initialized to the constructor‘s argument', function () {
       assert.equal(p.id, 'new id');
     });
     it('is not writable', function () {
-      p.id = 'another id';
+      try {
+        p.id = 'another id';
+      } catch (e) {
+        // In strict mode, this throws a TypeError
+        assert.ok(e instanceof TypeError);
+      }
+      // Even without a working strict mode, the id should be unchanged
       assert.equal(p.id, 'new id');
     });
   });
   describe('mutates', function () {
-    var p = particles.Particle('normal particle');
+    var p = Particle('normal particle');
     var mp = p.mutates('after', 'radiation', 'mutated particle');
     it('returns a Particle', function () {
-      assert(mp instanceof particles.Particle);
+      assert(mp instanceof Particle);
     });
     it('does not alter the original particle', function () {
       assert.notEqual(p, mp);
@@ -33,34 +45,36 @@ describe('Particle', function () {
 
 describe('Particles', function () {
   it('yields nothing when a shy particle meets a suffix', function () {
-    var wp = particles.Particle('shy particle').looses('after','*', 12).looses('before', '*', 12);
-    var suffix = particles.Particle('suffix').asSuffix();
-    var ps = particles.Particles(wp, suffix);
+    var wp = Particle('shy particle').looses('after','*', 12).looses('before', '*', 12);
+    var suffix = Particle('suffix').asSuffix();
+    var ps = Particles(wp, suffix);
     assert.equal(String(ps), '');
   });
   it('supports a joining particle', function () {
-    var joining = particles.Particle('join').mutates('after', '', '').mutates('before', '', '');
-    assert.equal(String(particles.Particles(joining, 'a')), 'a');
-    assert.equal(String(particles.Particles('a', joining)), 'a');
-    assert.equal(String(particles.Particles('a', joining, 'b')), 'ajoinb');
+    var joining = Particle('join').mutates('after', '', '').mutates('before', '', '');
+    assert.equal(String(Particles(joining, 'a')), 'a');
+    assert.equal(String(Particles('a', joining)), 'a');
+    assert.equal(String(Particles('a', joining, 'b')), 'ajoinb');
   });
   it('supports a mutating suffix', function () {
-    var suffix = particles.Particle('suffix').asSuffix().mutates('after', 'beetle', 'fix');
-    var beetle = particles.Particle('beetle').mutates('before', 'suffix', 'swee');
-    assert.equal(String(particles.Particles(beetle, suffix)), 'sweefix');
+    var suffix = Particle('suffix').asSuffix().mutates('after', 'beetle', 'fix');
+    var beetle = Particle('beetle').mutates('before', 'suffix', 'swee');
+    assert.equal(String(Particles(beetle, suffix)), 'sweefix');
   });
   it('looses on the mutation', function () {
-    var p = particles.Particle('original').mutates('before', 'suffix', 'mutated').looses('before', '*', 1);
-    var s = particles.Particle('suffix');
-    assert.equal(String(particles.Particles(p, s)), 'mutatesuffix');
+    var p = Particle('original')
+      .mutates('before', 'suffix', 'mutated')
+      .looses('before', '*', 1);
+    var s = Particle('suffix');
+    assert.equal(String(Particles(p, s)), 'mutatesuffix');
   });
   it('does not let an asterisk match an empty context', function () {
-    var p = particles.Particle('eins').looses('before', '*', '1');
-    assert.equal(String(particles.Particles([p])), 'eins');
+    var p = Particle('eins').looses('before', '*', '1');
+    assert.equal(String(Particles([p])), 'eins');
   });
   it('supports a getMembers method', function () {
-    var p1 = particles.Particle('');
-    var p2 = particles.Particle('');
-    assert.deepEqual(particles.Particles([p1, p2]).getMembers(), [p1, p2]);
+    var p1 = Particle('');
+    var p2 = Particle('');
+    assert.deepEqual(Particles([p1, p2]).getMembers(), [p1, p2]);
   });
 });

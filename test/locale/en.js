@@ -1,3 +1,6 @@
+/*global describe: false, it: false*/
+'use strict';
+
 var en = require('../../locale/en');
 var t = require('../util').inWordsTest.bind(null, en);
 

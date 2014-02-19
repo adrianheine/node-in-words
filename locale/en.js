@@ -1,3 +1,5 @@
+'use strict';
+
 var utils = require('../utils');
 
 var particles = require('../particles');
@@ -50,8 +52,6 @@ var lessThanHundred = (function () {
   return utils.withOverrides.bind(null, atoms, buildLessThanHundred);
 }());
 
-var joiner = P(' ').hides('before', '').hides('after', '');
-
 // FIXME: Bigger numbers
 var handlers = (function () {
   var h = [
@@ -64,22 +64,26 @@ var handlers = (function () {
     max: h[h.length - 1].d
   };
   for (var i = 0; i < h.length; ++i) {
-    handlers[h[i].d] = (typeof h[i].h === 'function') ? h[i].h : splitInWords.bind(null, h[i-1].d, P(h[i].h).asSuffix());
+    if (typeof h[i].h !== 'function') {
+       h[i].h = splitInWords.bind(null, h[i-1].d, P(h[i].h).asSuffix());
+    }
+    handlers[h[i].d] = h[i].h;
   }
   return handlers;
 }());
 
 function _inWords(val) {
   return utils.firstPropFrom(handlers, val.length)(val);
-};
+}
 
 function inWords(val) {
   val = String(val);
   if (val.length > inWords.max) {
     throw new Error('too big');
   }
-  return String(_inWords(val)).replace(/^\s+/, '').replace(/  /g, ' ');
-};
+  // FIXME: Should not be here
+  return String(_inWords(val)).replace(/^\s+/, '').replace(/ {2}/g, ' ');
+}
 inWords.max = handlers.max;
 
 module.exports = inWords;

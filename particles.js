@@ -1,3 +1,5 @@
+'use strict';
+
 function Particle(particle) {
   if (!(this instanceof Particle)) {
     return new Particle(particle);
@@ -72,7 +74,9 @@ Particle.addMod('hides', function (hidesWhere, hidesWhen) {
 });
 
 function psToSource(ps) {
-  return 'Ps([' + ps.map(function (p) { return p.toSource ? p.toSource() : ('String("' + String(p) + '")'); }).join(', ') + '])';
+  return 'Ps([' + ps.map(function (p) {
+    return p.toSource ? p.toSource() : ('String("' + String(p) + '")');
+  }).join(', ') + '])';
 }
 
 function Particles(ps) {
@@ -102,7 +106,7 @@ function Particles(ps) {
   this.toSource = function () {
     return psToSource(ps);
   };
-};
+}
 
 exports.Particles = Particles;
 exports.Particle = Particle;

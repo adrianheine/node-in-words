@@ -1,3 +1,5 @@
+'use strict';
+
 var utils = require('../utils');
 
 var particles = require('../particles');
@@ -21,29 +23,31 @@ var lessThanHundred = (function () {
   };
 
   var tenUnd = P('und').hides('before', 'zehn').hides('after', '').hides('before', '');
-  var tenZig = P('zig').asSuffix().mutates('after', 'drei', 'ßig').mutates('after', 'eins', 'hn');
+  var tenZig = P('zig').asSuffix()
+    .mutates('after', 'drei', 'ßig')
+    .mutates('after', 'eins', 'hn');
 
   return function (val, params) {
-      var _return = utils.withOverrides(atoms, function (val) {
-        return utils.splitHandle({
-          cutOffLowest: 1,
-          join: function (ten, single) {
-            return Particles(single, tenUnd, Particles(ten, tenZig));
-          },
-          handleParts: function (val) { return _inWords(val, params); }
-        }, val);
+    var _return = utils.withOverrides(atoms, function (val) {
+      return utils.splitHandle({
+        cutOffLowest: 1,
+        join: function (ten, single) {
+          return Particles(single, tenUnd, Particles(ten, tenZig));
+        },
+        handleParts: function (val) { return _inWords(val, params); }
       }, val);
-      // FIXME: Make this knowledge part of the particle and
-      // have Particle::toString react to an environment object
-      if (params.gender === 'f' && String(_return) === 'eins') {
-        _return = 'eine';
-      }
-      return _return;
+    }, val);
+    // FIXME: Make this knowledge part of the particle and
+    // have Particle::toString react to an environment object
+    if (params.gender === 'f' && String(_return) === 'eins') {
+      _return = 'eine';
     }
+    return _return;
+  };
 }());
 
 var medium = function (joiner, pos) {
-  var joiner = P(joiner).asSuffix();
+  joiner = P(joiner).asSuffix();
   return function (val, params) {
     return utils.splitHandle({
       cutOffLowest: pos,
@@ -55,14 +59,14 @@ var medium = function (joiner, pos) {
       },
       handleLowerPart: function (val) {
         return _inWords(val, params);
-      },
+      }
     }, val);
   };
 };
 
 var biggie = function (nounP, cutOff) {
   var biggieSpace = P(' ').hides('before', '');
-  var nounP = nounP.asSuffix();
+  nounP = nounP.asSuffix();
   return function (val, params) {
     return utils.splitHandle({
       cutOffLowest: cutOff,
@@ -76,7 +80,7 @@ var biggie = function (nounP, cutOff) {
       },
       handleLowerPart: function (val) {
         return _inWords(val, params);
-      },
+      }
     }, val);
   };
 };
@@ -107,7 +111,7 @@ var handlers = (function () {
 
 function _inWords(val, params) {
   return utils.firstPropFrom(handlers, val.length)(val, params);
-};
+}
 
 function inWords(val, params) {
   val = String(val);
@@ -115,7 +119,7 @@ function inWords(val, params) {
     throw new Error('too big');
   }
   return String(_inWords(val, params || {}));
-};
+}
 inWords.max = handlers.max;
 
 module.exports = inWords;

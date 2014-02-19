@@ -1,3 +1,7 @@
+/*global describe: false, it: false*/
+
+'use strict';
+
 var de = require('../../locale/de');
 var t = require('../util').inWordsTest.bind(null, de);
 
@@ -28,10 +32,12 @@ describe('de', function () {
   t(101000000, 'einhunderteine Million');
   t(201000000, 'zweihunderteine Million');
   t(2200000, 'zwei Millionen zweihunderttausend');
-  t(1234678901, 'eine Milliarde zweihundertvierunddreißig Millionen sechshundertachtundsiebzigtausendneunhunderteins');
+  t(1234678901, 'eine Milliarde zweihundertvierunddreißig Millionen ' +
+    'sechshundertachtundsiebzigtausendneunhunderteins');
   t(1000000000000, 'eine Billion');
   t(2001000000000, 'zwei Billionen eine Milliarde');
-  t(2001234678901, 'zwei Billionen eine Milliarde zweihundertvierunddreißig Millionen sechshundertachtundsiebzigtausendneunhunderteins');
+  t(2001234678901, 'zwei Billionen eine Milliarde zweihundertvierunddreißig ' +
+    'Millionen sechshundertachtundsiebzigtausendneunhunderteins');
   t(1000000000000000, 'eine Billiarde');
   t(2000000000000000, 'zwei Billiarden');
   t(1000000000000000000, 'eine Trillion');

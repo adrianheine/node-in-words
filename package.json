@@ -6,7 +6,9 @@
   "homepage": "https://github.com/adrianlang/node-in-words",
   "bugs": "https://github.com/adrianlang/node-in-words/issues",
   "scripts": {
-    "test": "mocha --recursive -R spec"
+    "test": "npm run-script lint && npm run-script unittest",
+    "unittest": "mocha --recursive --throw-deprecation --check-leaks -b -R progress",
+    "lint": "jshint --verbose ."
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
   } ],
   "devDependencies": {
-    "mocha": ""
+    "mocha": "",
+    "jshint": ""
   }
 }

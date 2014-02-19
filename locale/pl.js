@@ -2,6 +2,8 @@
  * Based on  https://github.com/exu/slownie.js
  */
 
+'use strict';
+
 var utils = require('../utils');
 
 var particles = require('../particles');
@@ -26,7 +28,7 @@ var lessThanHundred = (function () {
      9: P('dziewięć').mutates('before', 'dziesiąt', 'dziewiec')
       .mutates('before', 'set', 'dziewięc')
       .mutates('before', 'naście', 'dziewięt'),
-    10: 'dziesięc',
+    10: 'dziesięc'
   };
 
   var tenDziesiat = P('dziesiąt').asSuffix()
@@ -94,7 +96,7 @@ var createBiggie = (function () {
         handleParts: _inWords
       }, val);
     };
-  }
+  };
 }());
 
 var handlers = (function () {
@@ -126,14 +128,17 @@ var handlers = (function () {
     max: h[h.length - 1].d
   };
   for (var i = 0; i < h.length; ++i) {
-    handlers[h[i].d] = (typeof h[i].h === 'function') ? h[i].h : createBiggie(h[i-1].d, h[i].h);
+    if (typeof h[i].h !== 'function') {
+       h[i].h = createBiggie(h[i-1].d, h[i].h);
+    }
+    handlers[h[i].d] = h[i].h;
   }
   return handlers;
 }());
 
 function _inWords(val) {
   return utils.firstPropFrom(handlers, val.length)(val);
-};
+}
 
 function inWords(val) {
   val = String(val);
@@ -141,8 +146,8 @@ function inWords(val) {
     throw new Error('too big');
   }
   // FIXME: Should not be here
-  return String(_inWords(val)).replace(/^\s+/, '').replace(/  /g, ' ');
-};
+  return String(_inWords(val)).replace(/^\s+/, '').replace(/ {2}/g, ' ');
+}
 inWords.max = handlers.max;
 
 module.exports = inWords;
