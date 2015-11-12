@@ -59,10 +59,10 @@ The following packages do roughly the same:
 Author
 ------
 
-[Adrian Lang](http://adrianlang.de/id).
+[Adrian Heine](http://adrianheine.de/id).
 
 License
 -------
-Copyright 2013–2014 Adrian Lang.
+Copyright 2013–2015 Adrian Heine.
 
 Licensed under the Apache License, Version 2.0. See (http://www.apache.org/licenses/LICENSE-2.0).
