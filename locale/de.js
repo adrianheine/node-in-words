@@ -25,6 +25,7 @@ var lessThanHundred = (function () {
   var tenUnd = P('und').hides('before', 'zehn').hides('after', '').hides('before', '');
   var tenZig = P('zig').asSuffix()
     .mutates('after', 'drei', 'ßig')
+    .mutates('after', 'eine', 'hn')
     .mutates('after', 'eins', 'hn');
 
   return function (val, params) {
@@ -40,7 +41,7 @@ var lessThanHundred = (function () {
     // FIXME: Make this knowledge part of the particle and
     // have Particle::toString react to an environment object
     if (params.gender === 'f' && String(_return) === 'eins') {
-      _return = 'eine';
+      _return = P('eine').mutates('before', 'zig', 'ze');
     }
     return _return;
   };

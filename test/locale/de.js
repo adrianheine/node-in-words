@@ -38,6 +38,7 @@ describe('de', function () {
   t(2001000000000, 'zwei Billionen eine Milliarde');
   t(2001234678901, 'zwei Billionen eine Milliarde zweihundertvierunddreißig ' +
     'Millionen sechshundertachtundsiebzigtausendneunhunderteins');
+  t(10000000000000, 'zehn Billionen');
   t(1000000000000000, 'eine Billiarde');
   t(2000000000000000, 'zwei Billiarden');
   t(1000000000000000000, 'eine Trillion');

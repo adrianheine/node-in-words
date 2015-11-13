@@ -51,9 +51,10 @@ v0.1.1 (2015-11-13)
  - Updated devDependencies
  - Added jshint
 
-UNRELEASED (???)
+v0.2.0 (???)
 
  - Added example.js for npmjs.org tonic integration
+ - Fixed 10 plus female noun in German locale
 
 Other packages
 -----------
