@@ -22,7 +22,7 @@ var lessThanHundred = (function () {
     12: 'zwölf'
   };
 
-  var tenUnd = P('und').hides('before', 'zehn').hides('after', '').hides('before', '');
+  var tenUnd = P('und').hides('before', 'zehn').asJoiner();
   var tenZig = P('zig').asSuffix()
     .mutates('after', 'drei', 'ßig')
     .mutates('after', 'eine', 'hn')
@@ -66,7 +66,7 @@ var medium = function (joiner, pos) {
 };
 
 var biggie = function (nounP, cutOff) {
-  var biggieSpace = P(' ').hides('before', '');
+  var biggieSpace = P(' ').asPrefix();
   nounP = nounP.asSuffix();
   return function (val, params) {
     return utils.splitHandle({

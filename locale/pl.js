@@ -10,7 +10,7 @@ var particles = require('../particles');
 var P = particles.Particle;
 var Particles = particles.Particles;
 
-var joinSpace = P(' ').hides('before', '').hides('after', '');
+var joinSpace = P(' ').asJoiner();
 
 var lessThanHundred = (function () {
   var atoms = {

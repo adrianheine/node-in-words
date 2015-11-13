@@ -65,6 +65,18 @@ Particle.addMod('asSuffix', function () {
   };
 });
 
+Particle.addMod('asPrefix', function () {
+  return function (after, before) {
+    if (!after) return '';
+  };
+});
+
+Particle.addMod('asJoiner', function () {
+  return function (after, before) {
+    if (!after || !before) return '';
+  };
+});
+
 Particle.addMod('hides', function (hidesWhere, hidesWhen) {
   return function (after, before) {
     if (contextMatches(hidesWhere, hidesWhen, after, before)) {

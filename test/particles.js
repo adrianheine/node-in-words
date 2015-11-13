@@ -41,13 +41,50 @@ describe('Particle', function () {
       assert.equal(mp.toString('', 'radiation'), 'mutated particle');
     });
   });
+  describe('asJoiner', function () {
+    var p = Particle('normal particle');
+    var joiner = p.asJoiner();
+    it('returns a Particle', function () {
+      assert(joiner instanceof Particle);
+    });
+    it('does not alter the original particle', function () {
+      assert.notEqual(p, joiner);
+    });
+    it('does not appear if at the beginning', function () {
+      assert.equal(joiner.toString('', 'after'), '');
+    });
+    it('does not appear if at the end', function () {
+      assert.equal(joiner.toString('before', ''), '');
+    });
+    it('appears if between something', function () {
+      assert.equal(joiner.toString('before', 'after'), 'normal particle');
+    });
+  });
 });
 
 describe('Particles', function () {
+  it('yields something when a particle meets a suffix', function () {
+    var wp = Particle('particle');
+    var suffix = Particle('suffix').asSuffix();
+    var ps = Particles(wp, suffix);
+    assert.equal(String(ps), 'particlesuffix');
+  });
+  it('yields something when a particle meets a prefix', function () {
+    var wp = Particle('particle');
+    var prefix = Particle('prefix').asPrefix();
+    var ps = Particles(prefix, wp);
+    assert.equal(String(ps), 'prefixparticle');
+  });
   it('yields nothing when a shy particle meets a suffix', function () {
     var wp = Particle('shy particle').looses('after','*', 12).looses('before', '*', 12);
     var suffix = Particle('suffix').asSuffix();
     var ps = Particles(wp, suffix);
+    assert.equal(String(ps), '');
+  });
+  it('yields nothing when a shy particle meets a prefix', function () {
+    var wp = Particle('shy particle').looses('after','*', 12).looses('before', '*', 12);
+    var prefix = Particle('prefix').asPrefix();
+    var ps = Particles(prefix, wp);
     assert.equal(String(ps), '');
   });
   it('supports a joining particle', function () {
@@ -60,6 +97,11 @@ describe('Particles', function () {
     var suffix = Particle('suffix').asSuffix().mutates('after', 'beetle', 'fix');
     var beetle = Particle('beetle').mutates('before', 'suffix', 'swee');
     assert.equal(String(Particles(beetle, suffix)), 'sweefix');
+  });
+  it('supports a mutating prefix', function () {
+    var prefix = Particle('prefix').asPrefix().mutates('before', 'beetle', 'fix');
+    var beetle = Particle('beetle').mutates('after', 'prefix', 'swee');
+    assert.equal(String(Particles(prefix, beetle)), 'fixswee');
   });
   it('looses on the mutation', function () {
     var p = Particle('original')

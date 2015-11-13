@@ -13,7 +13,7 @@ function splitInWords(pos, joiner, val) {
       return Particles(higher, joiner, lower);
     },
     handleParts: function (v) {
-      return Particles(P(' ').hides('before', ''), _inWords(v));
+      return Particles(P(' ').asPrefix(), _inWords(v));
     }
   }, val);
 }
@@ -35,7 +35,7 @@ var lessThanHundred = (function () {
     12: 'twelve'
   };
 
-  var tenDash = P('-').hides('after', '').hides('before', '');
+  var tenDash = P('-').asJoiner();
   var tenTy = P('ty').asSuffix().mutates('after', 'one', 'en');
 
   var buildLessThanHundred = function (v) {
