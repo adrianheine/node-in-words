@@ -87,7 +87,7 @@ var createBiggie = (function () {
 
           // FIXME: Will fail pretty soon on JS’ Unicode RegExp issues wrt \b
           if (higher instanceof Particles) {
-            higher = higher.toString().split(/\b/);
+            higher = String(higher).split(/\b/);
           } else {
             higher = [ higher ];
           }
