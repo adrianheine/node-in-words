@@ -5,36 +5,38 @@ var pl = require('../../locale/pl');
 var t = require('../util').inWordsTest.bind(null, pl);
 
 describe('pl', function () {
-  var Slownie;
 
-  function test(i) {
-    if (i !== '0') {
-      t(i, Slownie.get(i));
+  function testUsingSlownie() {
+    var Slownie = new (require('slownie').Slownie)();
+
+    function test(i) {
+      if (i !== '0') {
+        t(i, Slownie.get(i));
+      }
     }
-  }
 
-  function randomDigit() {
-    return Math.floor(Math.random() * 10);
-  }
-
-  function randomNumber(digits) {
-    var res = '';
-    for (; digits; --digits) {
-      res += randomDigit();
+    function randomDigit() {
+      return Math.floor(Math.random() * 10);
     }
-    return res;
-  }
 
-  try {
-    Slownie = new (require('slownie.js').Slownie)();
-  } catch (e) {
-  }
-  if (Slownie) {
+    function randomNumber(digits) {
+      var res = '';
+      for (; digits; --digits) {
+        res += randomDigit();
+      }
+      return res;
+    }
+
     for (var i = 1; i < 28; ++i) {
       for (var n = 0; n < 100; ++n) {
         test(randomNumber(i));
       }
     }
+  }
+  try {
+    testUsingSlownie();
+  } catch (e) {
+    console.warn('Testing random polish numbers only works with slownie installed');
   }
 
   t('0', 'zero');
