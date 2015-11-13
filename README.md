@@ -58,6 +58,7 @@ v0.2.0 (???)
  - Fixed ?00 plus noun in German locale
  - Introduced Particle::asJoiner and Particle::asPrefix
  - Introduced Words
+ - Removed Particles::getMembers
 
 Other packages
 -----------

@@ -115,11 +115,6 @@ describe('Particles', function () {
     var p = Particle('eins').looses('before', '*', '1');
     assert.equal(String(Particles([p])), 'eins');
   });
-  it('supports a getMembers method', function () {
-    var p1 = Particle('');
-    var p2 = Particle('');
-    assert.deepEqual(Particles([p1, p2]).getMembers(), [p1, p2]);
-  });
 });
 
 describe('Words', function () {

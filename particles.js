@@ -112,10 +112,6 @@ function Particles(ps) {
     return this._string;
   };
 
-  this.getMembers = function () {
-    return ps.slice();
-  };
-
   this.toSource = function () {
     return 'Ps([' + psToSource(ps) + '])';
   };
