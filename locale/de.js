@@ -9,7 +9,6 @@ var Particles = particles.Particles;
 var lessThanHundred = (function () {
   var atoms = {
      0: P('null').hides('after', '*').hides('before', '*'),
-     1: P('eins').looses('before', '*', 1).mutates('before', 'zig', 'ze'),
      2: P('zwei').mutates('before', 'zig', 'zwan'),
      3: 'drei',
      4: 'vier',
@@ -21,6 +20,13 @@ var lessThanHundred = (function () {
     11: 'elf',
     12: 'zwölf'
   };
+  var atomsByGender = {
+    f: Object.create(atoms),
+    m: Object.create(atoms)
+  };
+  atomsByGender.f['1'] = P('eine').mutates('before', 'zig', 'ze');
+  atomsByGender.m['1'] = P('eins').looses('before', '*', 1)
+    .mutates('before', 'zig', 'ze');
 
   var tenUnd = P('und').hides('before', 'zehn').asJoiner();
   var tenZig = P('zig').asSuffix()
@@ -29,7 +35,7 @@ var lessThanHundred = (function () {
     .mutates('after', 'eins', 'hn');
 
   return function (val, params) {
-    var _return = utils.withOverrides(atoms, function (val) {
+    return utils.withOverrides(atomsByGender[params.gender], function (val) {
       return utils.splitHandle({
         cutOffLowest: 1,
         join: function (ten, single) {
@@ -38,12 +44,6 @@ var lessThanHundred = (function () {
         handleParts: function (val) { return _inWords(val, params); }
       }, val);
     }, val);
-    // FIXME: Make this knowledge part of the particle and
-    // have Particle::toString react to an environment object
-    if (params.gender === 'f' && String(_return) === 'eins') {
-      _return = P('eine').mutates('before', 'zig', 'ze');
-    }
-    return _return;
   };
 }());
 
@@ -118,6 +118,7 @@ var handlers = (function () {
 }());
 
 function _inWords(val, params) {
+  params.gender = params.gender || 'm';
   return utils.firstPropFrom(handlers, val.length)(val, params);
 }
 

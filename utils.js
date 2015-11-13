@@ -1,7 +1,7 @@
 'use strict';
 
 exports.withOverrides = function (overrides, algo, val) {
-  if (overrides.hasOwnProperty(val)) {
+  if (overrides[val]) {
     return overrides[val];
   }
   return algo(val);
