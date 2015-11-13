@@ -6,9 +6,10 @@
   "homepage": "https://github.com/adrianheine/node-in-words",
   "bugs": "https://github.com/adrianheine/node-in-words/issues",
   "scripts": {
-    "test": "npm run-script lint && npm run-script unittest",
+    "test": "npm run-script lint && npm run-script unittest && npm run-script testexample",
     "unittest": "mocha --recursive --throw-deprecation --check-leaks -b -R progress",
-    "lint": "jshint --verbose ."
+    "lint": "jshint --verbose .",
+    "testexample": "node -c example.js"
   },
   "repository": {
     "type": "git",
@@ -31,5 +32,6 @@
     "mocha": "",
     "jshint": "",
     "slownie": ""
-  }
+  },
+  "tonicExampleFilename": "example.js"
 }

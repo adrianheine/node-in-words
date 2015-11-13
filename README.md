@@ -51,6 +51,10 @@ v0.1.1 (2015-11-13)
  - Updated devDependencies
  - Added jshint
 
+UNRELEASED (???)
+
+ - Added example.js for npmjs.org tonic integration
+
 Other packages
 -----------
 
