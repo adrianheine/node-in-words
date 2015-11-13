@@ -5,18 +5,7 @@ var utils = require('../utils');
 var particles = require('../particles');
 var P = particles.Particle;
 var Particles = particles.Particles;
-
-function splitInWords(pos, joiner, val) {
-  return utils.splitHandle({
-    cutOffLowest: pos,
-    join: function (higher, lower) {
-      return Particles(higher, joiner, lower);
-    },
-    handleParts: function (v) {
-      return Particles(P(' ').asPrefix(), _inWords(v));
-    }
-  }, val);
-}
+var Words = particles.Words;
 
 var lessThanHundred = (function () {
   var atoms = {
@@ -56,16 +45,23 @@ var lessThanHundred = (function () {
 var handlers = (function () {
   var h = [
     {d: 2, h: lessThanHundred},
-    {d: 3, h: ' hundred'},
-    {d: 6, h: ' thousand'},
-    {d: 9, h: ' million'}
+    {d: 3, h: 'hundred'},
+    {d: 6, h: 'thousand'},
+    {d: 9, h: 'million'}
   ];
   var handlers = {
     max: h[h.length - 1].d
   };
+  function join (joiner, higher, lower) {
+    return Words(higher, joiner, lower);
+  }
   for (var i = 0; i < h.length; ++i) {
     if (typeof h[i].h !== 'function') {
-       h[i].h = splitInWords.bind(null, h[i-1].d, P(h[i].h).asSuffix());
+      h[i].h = utils.splitHandle.bind(utils, {
+        cutOffLowest: h[i-1].d,
+        join: join.bind(null, P(h[i].h).asSuffix()),
+        handleParts: _inWords
+      });
     }
     handlers[h[i].d] = h[i].h;
   }
@@ -81,8 +77,7 @@ function inWords(val) {
   if (val.length > inWords.max) {
     throw new Error('too big');
   }
-  // FIXME: Should not be here
-  return String(_inWords(val)).replace(/^\s+/, '').replace(/ {2}/g, ' ');
+  return String(_inWords(val));
 }
 inWords.max = handlers.max;
 

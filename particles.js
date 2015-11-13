@@ -86,9 +86,13 @@ Particle.addMod('hides', function (hidesWhere, hidesWhen) {
 });
 
 function psToSource(ps) {
-  return 'Ps([' + ps.map(function (p) {
+  return ps.map(function (p) {
     return p.toSource ? p.toSource() : ('String("' + String(p) + '")');
-  }).join(', ') + '])';
+  }).join(', ');
+}
+
+function conditionalToString(p, k, ps) {
+  return p && p.toString(ps[k+1] && String(ps[k+1]), ps[k-1] && String(ps[k-1]));
 }
 
 function Particles(ps) {
@@ -99,9 +103,6 @@ function Particles(ps) {
     return new Particles(ps);
   }
 
-  function conditionalToString(p, k, ps) {
-    return p && p.toString(ps[k+1] && String(ps[k+1]), ps[k-1] && String(ps[k-1]));
-  }
   this.toString = function () {
     if (typeof this._string === 'undefined') {
       this._string = ps.filter(conditionalToString)
@@ -116,9 +117,32 @@ function Particles(ps) {
   };
 
   this.toSource = function () {
-    return psToSource(ps);
+    return 'Ps([' + psToSource(ps) + '])';
+  };
+}
+
+function Words(ps) {
+  if (arguments.length > 1) {
+    ps = Array.prototype.slice.call(arguments);
+  }
+  if (!(this instanceof Words)) {
+    return new Words(ps);
+  }
+
+  this.toString = function () {
+    if (typeof this._string === 'undefined') {
+      this._string = ps.filter(conditionalToString)
+        .map(conditionalToString)
+        .join(' ');
+    }
+    return this._string;
+  };
+
+  this.toSource = function () {
+    return 'Ws([' + psToSource(ps) + '])';
   };
 }
 
 exports.Particles = Particles;
 exports.Particle = Particle;
+exports.Words = Words;

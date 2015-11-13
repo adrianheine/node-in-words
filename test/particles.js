@@ -7,6 +7,7 @@ var assert = require('assert');
 var particles = require('../particles');
 var Particle = particles.Particle;
 var Particles = particles.Particles;
+var Words = particles.Words;
 
 describe('Particle', function () {
   describe('id', function () {
@@ -118,5 +119,59 @@ describe('Particles', function () {
     var p1 = Particle('');
     var p2 = Particle('');
     assert.deepEqual(Particles([p1, p2]).getMembers(), [p1, p2]);
+  });
+});
+
+describe('Words', function () {
+  it('yields something when a particle meets a suffix', function () {
+    var wp = Particle('particle');
+    var suffix = Particle('suffix').asSuffix();
+    var ps = Words(wp, suffix);
+    assert.equal(String(ps), 'particle suffix');
+  });
+  it('yields something when a particle meets a prefix', function () {
+    var wp = Particle('particle');
+    var prefix = Particle('prefix').asPrefix();
+    var ps = Words(prefix, wp);
+    assert.equal(String(ps), 'prefix particle');
+  });
+  it('yields nothing when a shy particle meets a suffix', function () {
+    var wp = Particle('shy particle').looses('after','*', 12).looses('before', '*', 12);
+    var suffix = Particle('suffix').asSuffix();
+    var ps = Words(wp, suffix);
+    assert.equal(String(ps), '');
+  });
+  it('yields nothing when a shy particle meets a prefix', function () {
+    var wp = Particle('shy particle').looses('after','*', 12).looses('before', '*', 12);
+    var prefix = Particle('prefix').asPrefix();
+    var ps = Words(prefix, wp);
+    assert.equal(String(ps), '');
+  });
+  it('supports a joining particle', function () {
+    var joining = Particle('join').mutates('after', '', '').mutates('before', '', '');
+    assert.equal(String(Words(joining, 'a')), 'a');
+    assert.equal(String(Words('a', joining)), 'a');
+    assert.equal(String(Words('a', joining, 'b')), 'a join b');
+  });
+  it('supports a mutating suffix', function () {
+    var suffix = Particle('suffix').asSuffix().mutates('after', 'beetle', 'fix');
+    var beetle = Particle('beetle').mutates('before', 'suffix', 'swee');
+    assert.equal(String(Words(beetle, suffix)), 'swee fix');
+  });
+  it('supports a mutating prefix', function () {
+    var prefix = Particle('prefix').asPrefix().mutates('before', 'beetle', 'fix');
+    var beetle = Particle('beetle').mutates('after', 'prefix', 'swee');
+    assert.equal(String(Words(prefix, beetle)), 'fix swee');
+  });
+  it('looses on the mutation', function () {
+    var p = Particle('original')
+      .mutates('before', 'suffix', 'mutated')
+      .looses('before', '*', 1);
+    var s = Particle('suffix');
+    assert.equal(String(Words(p, s)), 'mutate suffix');
+  });
+  it('does not let an asterisk match an empty context', function () {
+    var p = Particle('eins').looses('before', '*', '1');
+    assert.equal(String(Words([p])), 'eins');
   });
 });
