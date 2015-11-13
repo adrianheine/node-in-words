@@ -42,8 +42,14 @@ v0.0.2 (2013-08-14)
 v0.1.0 (2014-02-16)
 
  - Added Polish locale
- - Make German locale work with much bigger numbers
- - Fix German locale for numbers ending with 1
+ - Made German locale work with much bigger numbers
+ - Fixed German locale for numbers ending with 1
+
+v0.1.1 (2015-11-13)
+
+ - Reflected my name change in documentation and links
+ - Updated devDependencies
+ - Added jshint
 
 Other packages
 -----------
