@@ -72,9 +72,16 @@ var biggie = function (nounP, cutOff) {
     return utils.splitHandle({
       cutOffLowest: cutOff,
       join: function (higher, lower) {
-        // unwrap particles
-        higher = higher instanceof Particles ? higher.getMembers() : [ higher ];
-        return Particles(higher.concat([ nounP, biggieSpace, lower ]));
+        higher = String(higher);
+        var res = [];
+        // The big nouns need to know if they come after 'eine', so we split it off
+        if (higher.substr(-4) === 'eine') {
+          res = res.concat([ higher.substr(0, higher.length - 4), 'eine' ]);
+        } else {
+          res.push(higher);
+        }
+        res = res.concat([ nounP, biggieSpace, lower ]);
+        return Particles(res);
       },
       handleHigherPart: function (val) {
         return _inWords(val, {gender: 'f'});

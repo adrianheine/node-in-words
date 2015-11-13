@@ -55,6 +55,7 @@ v0.2.0 (???)
 
  - Added example.js for npmjs.org tonic integration
  - Fixed 10 plus female noun in German locale
+ - Fixed ?00 plus noun in German locale
 
 Other packages
 -----------
