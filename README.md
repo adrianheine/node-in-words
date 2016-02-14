@@ -60,6 +60,10 @@ v0.2.0 (2015-11-13)
  - Introduced Words
  - Removed Particles::getMembers
 
+v0.2.1 (2016-02-14)
+
+ - Fixed English spelling for 18
+
 Other packages
 -----------
 
