@@ -17,7 +17,7 @@ var lessThanHundred = (function () {
      5: P('five').mutates('before', 'teen', 'fif').mutates('before', 'ty', 'fif'),
      6: 'six',
      7: 'seven',
-     8: P('eight').mutates('before', 'ty', 'eigh'),
+     8: P('eight').mutates('before', 'teen', 'eigh').mutates('before', 'ty', 'eigh'),
      9: 'nine',
     10: 'ten',
     11: 'eleven',

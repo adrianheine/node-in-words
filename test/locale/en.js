@@ -14,6 +14,8 @@ describe('en', function () {
   t(15, 'fifteen');
   t(16, 'sixteen');
   t(17, 'seventeen');
+  t(18, 'eighteen');
+  t(19, 'nineteen');
   t(20, 'twenty');
   t(21, 'twenty-one');
   t(25, 'twenty-five');
