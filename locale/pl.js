@@ -25,10 +25,8 @@ var lessThanHundred = (function () {
      6: P('sześć').mutates('before', 'naście', 'szes'),
      7: 'siedem',
      8: 'osiem',
-     9: P('dziewięć').mutates('before', 'dziesiąt', 'dziewiec')
-      .mutates('before', 'set', 'dziewięc')
-      .mutates('before', 'naście', 'dziewięt'),
-    10: 'dziesięc'
+     9: P('dziewięć').mutates('before', 'naście', 'dziewięt'),
+    10: 'dziesięć'
   };
 
   var tenDziesiat = P('dziesiąt').asSuffix()
