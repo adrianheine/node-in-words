@@ -1,6 +1,6 @@
 {
   "name": "in-words",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Convert numbers to words",
   "main": "index.js",
   "homepage": "https://github.com/adrianheine/node-in-words",

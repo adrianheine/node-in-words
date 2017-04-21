@@ -64,6 +64,10 @@ v0.2.1 (2016-02-14)
 
  - Fixed English spelling for 18
 
+v0.2.2 (2017-04-21)
+
+ - Fixed Polish spelling for all numbers with 9 (Thanks to Marek Mizier)
+
 Other packages
 -----------
 
