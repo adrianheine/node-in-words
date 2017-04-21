@@ -30,8 +30,7 @@
   } ],
   "devDependencies": {
     "mocha": "",
-    "jshint": "",
-    "slownie": ""
+    "jshint": ""
   },
   "tonicExampleFilename": "example.js"
 }
