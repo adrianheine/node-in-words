@@ -16,11 +16,11 @@ var lessThanHundred = (function () {
   var atoms = {
      0: P('zero').hides('after', '*').hides('before', '*'),
      1: P('jeden').mutates('before', 'dziesiąt', 'na') // FIXME joining thing
-      .mutates('before', 'naście', 'jede'),
+       .mutates('before', 'naście', 'jede'),
      2: P('dwa').mutates('before', 'set', 'dwie'),
      3: 'trzy',
      4: P('cztery').mutates('before', 'naście', 'czter')
-      .mutates('before', 'dziesiąt', 'czter'),
+       .mutates('before', 'dziesiąt', 'czter'),
      5: P('pięć').mutates('before', 'naście', 'pięt'),
      6: P('sześć').mutates('before', 'naście', 'szes'),
      7: 'siedem',
@@ -127,7 +127,7 @@ var handlers = (function () {
   };
   for (var i = 0; i < h.length; ++i) {
     if (typeof h[i].h !== 'function') {
-       h[i].h = createBiggie(h[i-1].d, h[i].h);
+      h[i].h = createBiggie(h[i-1].d, h[i].h);
     }
     handlers[h[i].d] = h[i].h;
   }

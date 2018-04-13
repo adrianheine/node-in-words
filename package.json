@@ -8,7 +8,7 @@
   "scripts": {
     "test": "npm run-script lint && npm run-script unittest && npm run-script testexample",
     "unittest": "mocha --recursive --throw-deprecation --check-leaks -b -R progress",
-    "lint": "jshint --verbose .",
+    "lint": "eslint .",
     "testexample": "node -c example.js"
   },
   "repository": {
@@ -29,8 +29,8 @@
     "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
   } ],
   "devDependencies": {
-    "mocha": "",
-    "jshint": ""
+    "eslint": "^4.19.1",
+    "mocha": "^5.1.0"
   },
-  "tonicExampleFilename": "example.js"
+  "tonicExampleFilename": "example/example.js"
 }

@@ -21,7 +21,7 @@ Particle.addMod = function (name, toStringGenerator) {
     var superToString = this.toString;
     var newP = Object.create(this);
     var toString = toStringGenerator.apply(newP, arguments);
-    Object.defineProperty(newP, 'toString', { value: function (after, before) {
+    Object.defineProperty(newP, 'toString', { value: function (_after, _before) {
       if (arguments.length === 0) {
         return Particle.prototype.toString.apply(this);
       }
@@ -66,7 +66,7 @@ Particle.addMod('asSuffix', function () {
 });
 
 Particle.addMod('asPrefix', function () {
-  return function (after, before) {
+  return function (after, _before) {
     if (!after) return '';
   };
 });
