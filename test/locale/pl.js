@@ -14,6 +14,7 @@ describe('pl', function () {
   t('7', 'siedem');
   t('10', 'dziesięć');
   t('12', 'dwanaście');
+  t('14', 'czternaście');
   t('17', 'siedemnaście');
   t('26', 'dwadzieścia sześć');
   t('30', 'trzydzieści');

@@ -8,7 +8,7 @@ var Particles = particles.Particles;
 
 var lessThanHundred = (function () {
   var atoms = {
-     0: P('null').hides('after', '*').hides('before', '*'),
+     0: P('null').hides('before', '*'),
      2: P('zwei').mutates('before', 'zig', 'zwan'),
      3: 'drei',
      4: 'vier',

@@ -144,7 +144,7 @@ function inWords(val) {
     throw new Error('too big');
   }
   // FIXME: Should not be here
-  return String(_inWords(val)).replace(/^\s+/, '').replace(/ {2}/g, ' ');
+  return String(_inWords(val)).replace(/ {2}/g, ' ');
 }
 inWords.max = handlers.max;
 
