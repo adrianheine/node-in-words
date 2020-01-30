@@ -4,14 +4,17 @@ in words
 Convert natural numbers (and 0) to words.
 
 Usage
------
 
-    var inWordsDe = require('in-words').de;
-    inWordsDe('427534'); // => 'vierhundertsiebenundzwanzigtausendfünfhundertvierunddreißig'
-    var inWordsEn = require('in-words').en;
-    inWordsEn('427534'); // => 'four hundred twenty-seven thousand five hundred thirty-four'
-    var inWordsPl = require('in-words').pl;
-    inWordsPl('427534'); // => 'czterysta dwadzieścia siedem tysięcy pięćset trzydzieści cztery'
+```js
+const inWordsDe = require('in-words').de;
+inWordsDe('427534'); // => 'vierhundertsiebenundzwanzigtausendfünfhundertvierunddreißig'
+
+const inWordsEn = require('in-words').en;
+inWordsEn('427534'); // => 'four hundred twenty-seven thousand five hundred thirty-four'
+
+const inWordsPl = require('in-words').pl;
+inWordsPl('427534'); // => 'czterysta dwadzieścia siedem tysięcy pięćset trzydzieści cztery'
+```
 
 Todo
 ----
