@@ -34,6 +34,7 @@ describe('en', function () {
   t(100, 'one hundred');
   t(600, 'six hundred');
   t(700, 'seven hundred');
+  t(1010, 'one thousand ten');
   t(10000, 'ten thousand');
   t(427534, 'four hundred twenty-seven thousand five hundred thirty-four');
   t(999999, 'nine hundred ninety-nine thousand nine hundred ninety-nine');

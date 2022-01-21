@@ -105,9 +105,18 @@ function Particles(ps) {
 
   this.toString = function () {
     if (typeof this._string === 'undefined') {
-      this._string = ps.filter(conditionalToString)
-        .map(conditionalToString)
-        .join('');
+      var f_ps = [];
+      var prev = null;
+      for (var k = 0; k < ps.length; ++k) {
+        var p = ps[k];
+        if (p && p.toString(ps[k+1] && String(ps[k+1]), prev && String(prev))) {
+          f_ps.push(p);
+          prev = p;
+        } else {
+          prev = null;
+        }
+      }
+      this._string = f_ps.map(conditionalToString).join('');
     }
     return this._string;
   };
@@ -127,9 +136,18 @@ function Words(ps) {
 
   this.toString = function () {
     if (typeof this._string === 'undefined') {
-      this._string = ps.filter(conditionalToString)
-        .map(conditionalToString)
-        .join(' ');
+      var f_ps = [];
+      var prev = null;
+      for (var k = 0; k < ps.length; ++k) {
+        var p = ps[k];
+        if (p && p.toString(ps[k+1] && String(ps[k+1]), prev && String(prev))) {
+          f_ps.push(p);
+          prev = p;
+        } else {
+          prev = null;
+        }
+      }
+      this._string = f_ps.map(conditionalToString).join(' ');
     }
     return this._string;
   };
