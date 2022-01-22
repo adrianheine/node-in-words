@@ -9,7 +9,7 @@ exports.withOverrides = function (overrides, algo, val) {
 
 exports.firstPropFrom = function (object, i) {
   for (;; ++i) {
-    if (object.hasOwnProperty(i)) {
+    if (Object.prototype.hasOwnProperty.call(object, i)) {
       return object[i];
     }
   }
