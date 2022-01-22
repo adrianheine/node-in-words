@@ -6,10 +6,10 @@
   "homepage": "https://github.com/adrianheine/node-in-words",
   "bugs": "https://github.com/adrianheine/node-in-words/issues",
   "scripts": {
-    "test": "npm run-script lint && npm run-script unittest && npm run-script testexample",
+    "test": "npm run-script lint && npm run-script unittest && npm run-script checkexample",
     "unittest": "mocha --recursive --throw-deprecation --check-leaks -b -R progress",
     "lint": "eslint .",
-    "testexample": "node -c example.js"
+    "checkexample": "node -c example/example.js"
   },
   "repository": {
     "type": "git",
