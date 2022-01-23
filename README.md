@@ -71,6 +71,10 @@ v0.2.2 (2017-04-21)
 
  - Fixed Polish spelling for all numbers with 9 (Thanks to Marek Mizier)
 
+v0.2.3 (2022-01-23)
+
+ - Fixed English spelling for 1010
+
 Other packages
 -----------
 
